@@ -11,6 +11,7 @@ app.use(bodyparse.json());
 app.use("/api", routers.user);
 app.use("/api", routers.auth);
 app.use("/api", routers.cour);
+app.use("/api", routers.abonne);
 app.get("/", (req, res) => res.send("HelloWold"));
 
 app.listen(port, () =>
