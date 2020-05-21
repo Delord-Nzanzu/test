@@ -15,27 +15,27 @@ module.exports = {
   newuser: function (req, res) {
     const passwords = req.body.passwords;
 
-    let itm = new model.utilisateur({
+    let item = new model.utilisateur({
       id: shortid.generate(),
       username: req.body.username,
       niveauacc: req.body.niveauacc,
     });
 
-    itm.setPassword(passwords);
+    item.setPassword(passwords);
 
     model.utilisateur
       .findOne({
-        where: { username: itm.username },
+        where: { username: item.username },
       })
       .then((user) => {
         if (user) res.json({ error: "user exist" });
         else
           model.utilisateur
             .create({
-              id: itm.id,
-              username: itm.username,
-              passwords: itm.passwords,
-              niveauacc: itm.niveauacc,
+              id: item.id,
+              username: item.username,
+              passwords: item.passwords,
+              niveauacc: item.niveauacc,
             })
             .then((newUser) => {
               res.json({ newUser });
@@ -53,7 +53,7 @@ module.exports = {
 
   //===============================================================Select *
 
-  notify: function (req, res) {
+  users: function (req, res) {
     model.utilisateur
       .findAll()
       .then((user) => {
@@ -67,30 +67,29 @@ module.exports = {
 
   //=================================================================select with name
 
-  notify2: function (req, res) {
-    let item = new model.utilisateur({
-      username: req.body.username,
-    });
-    model.utilisateur
-      .findOne({
-        where: { username: item.username },
-      })
-      .then((user) => {
-        if (user) res.json({ user });
-        else return res.status(400).json({ error: "nothing some one" });
-      })
-      .catch((error) => {
-        console.log(error);
-        res.status(4003).json({ error });
-      });
-  },
+  // notify2: function (req, res) {
+  //   let item = new model.utilisateur({
+  //     username: req.body.username,
+  //   });
+  //   model.utilisateur
+  //     .findOne({
+  //       where: { username: item.username },
+  //     })
+  //     .then((user) => {
+  //       if (user) res.json({ user });
+  //       else return res.status(400).json({ error: "nothing some one" });
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //       res.status(4003).json({ error });
+  //     });
+  // },
 
   //===============================================================================logine
   login: function (req, res) {
     if (chekErrer(req)) {
       return res.status(403).json({ error: chekErrer(req) });
     }
-    console.log("je suis la 2");
     const { username, passwords } = req.body;
 
     model.utilisateur
@@ -100,9 +99,8 @@ module.exports = {
         },
       })
       .then((user) => {
-        if (!user) res.status(403).json({ error: "nothing user" });
-
-        if (user.comparePassword(passwords))
+        if (!user) res.status(403).json({ error: "failed credentials" });
+        else if (user.comparePassword(passwords))
           res.status(200).json({ user: user.toAuthJSON() });
       })
       .catch((error) => {
@@ -113,14 +111,14 @@ module.exports = {
   //=========================================================update
   update: function (req, res) {
     //const passwords = req.body.passwords;
-    let itm = new model.utilisateur({
+    let item = new model.utilisateur({
       username: req.body.username,
       niveauacc: req.body.niveauacc,
     });
     model.utilisateur
       .update(
-        { niveauacc: itm.niveauacc },
-        { where: { username: itm.username } }
+        { niveauacc: item.niveauacc },
+        { where: { username: item.username } }
       )
       .then((user) => {
         if (user) res.json({ user });

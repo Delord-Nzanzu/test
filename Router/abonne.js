@@ -1,10 +1,11 @@
 const express = require("express");
 const controller = require("../controllers");
-const jwt = require("../middleware");
+const midolware = require("../middleware");
 
 const router = express.Router();
 
-router.use(jwt.jws.verifyToken);
+router.use(midolware.jwt.verifyToken);
 
-router.post("/abonne/add", controller.abonnes.addnewcours);
+router.post("/add", controller.abonnes.add);
+router.get("/", controller.abonnes.subscriptions);
 module.exports = router;

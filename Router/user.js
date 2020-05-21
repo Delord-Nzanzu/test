@@ -1,13 +1,13 @@
 const express = require("express");
-const traitement = require("../controllers");
-const jwt = require("../middleware");
+const controller = require("../controllers");
+const midolware = require("../middleware");
 
 const router = express.Router();
 
-// router.use(jwt.jws.verifyToken);
+router.use(midolware.jwt.verifyToken);
 
-router.get("/user/select", traitement.users.notify);
-router.post("/user/select/:name", traitement.users.notify2);
-router.post("/user/update", traitement.users.update);
+router.get("/", controller.users.users);
+//router.post("/", controller.users.notify2);
+router.put("/", controller.users.update);
 
 module.exports = router;

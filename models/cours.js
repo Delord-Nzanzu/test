@@ -17,6 +17,10 @@ module.exports = function (sequelize, DataTypes) {
         type: DataTypes.DATEONLY,
         allowNull: true,
       },
+      prix: {
+        type: DataTypes.INTEGER(1),
+        allowNull: true,
+      },
     },
     {
       tableName: "cours",

@@ -1,5 +1,5 @@
-const jws = require("./jwt");
+const jwt = require("./jwt");
 
 module.exports = {
-  jws,
+  jwt,
 };

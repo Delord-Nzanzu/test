@@ -8,10 +8,10 @@ const port = process.env.port || 3000;
 app.use(bodyparse.urlencoded({ extended: true }));
 app.use(bodyparse.json());
 
-app.use("/api", routers.user);
-app.use("/api", routers.auth);
-app.use("/api", routers.cour);
-app.use("/api", routers.abonne);
+app.use("/users", routers.user);
+app.use("/auth", routers.auth);
+app.use("/courses", routers.cour);
+app.use("/subscriptions", routers.abonne);
 app.get("/", (req, res) => res.send("HelloWold"));
 
 app.listen(port, () =>
