@@ -21,7 +21,7 @@ module.exports = {
             error: "price error",
           });
         else if (course.idcours == item.idcours && item.idUsers)
-          res.status(403).json({ error: "tu es deja abonnee dans cet cour" });
+          res.status(403).json({ error: "Tu es deja abonner a se cour" });
         else
           item
             .save()

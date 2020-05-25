@@ -17,7 +17,6 @@ module.exports = {
       prix: req.body.prix,
     });
     const { user } = req;
-    // console.log("User:" + user.id),
     if (user.niveauacc == 5)
       model.cours
         .findOne({
@@ -66,9 +65,7 @@ module.exports = {
       .findOne({ where: { idcours: itm.idcours } })
       .then((idcours) => {
         if (!idcours)
-          res
-            .status(403)
-            .json({ error: "les donnees modifiable n'existe pas" });
+          res.status(403).json({ error: "la donnee modifiable n'existe pas" });
         else
           model.cours
             .update(
@@ -88,10 +85,7 @@ module.exports = {
   },
 
   serch: function (req, res) {
-    // let itm = new model.cours({
-    //   titre: req.body.titre,
-    // });
-    let { titre, limit, offset } = req.query;
+    let { titre, dates, limit, offset } = req.query;
     limit = parseInt(limit, 10);
     offset = parseInt(offset, 10);
     model.cours
@@ -102,6 +96,9 @@ module.exports = {
           [Op.or]: {
             titre: {
               [Op.like]: `%${titre}%`,
+            },
+            dates: {
+              [Op.like]: `%${dates}`,
             },
           },
         },
